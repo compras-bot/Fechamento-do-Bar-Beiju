@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fechamento do Bar — Beijupirá</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="wrap">
+  <button id="themeToggle" class="theme-toggle" aria-label="Alternar tema claro/escuro" type="button">🌙</button>
+
+  <div class="tabs">
+    <button class="tab-btn active" id="tabBtnFechamento" data-tab="fechamento">Fechamento do bar</button>
+    <button class="tab-btn" id="tabBtnRelatorio" data-tab="relatorio">Relatório de fechamento</button>
+  </div>
+
+  <div id="tab-fechamento" class="tab-panel active">
+  <div class="masthead">
+    <div class="eyebrow">Beijupirá · fim de expediente</div>
+    <h1>Fechamento <em>do bar</em></h1>
+    <div class="sub" id="stepLabel">Passo 1 de 13 — Identificação</div>
+  </div>
+
+  <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+
+  <!-- STEP 1 — Identificação -->
+  <div class="step active" data-step="1">
+    <div class="section">
+      <div class="section-head"><div class="num">·</div><h2>Identificação</h2></div>
+      <label for="data">Data</label>
+      <input type="date" id="data">
+      <label for="responsavel" style="margin-top:12px;">Responsável</label>
+      <input type="text" id="responsavel" placeholder="Digite o nome" autocomplete="off">
+      <div class="error-text" id="errResponsavel">Digite o nome do responsável para continuar</div>
+    </div>
+  </div>
+
+  <!-- STEP 2 — Movimento -->
+  <div class="step" data-step="2">
+    <div class="section">
+      <div class="section-head"><div class="num">1</div><h2>Movimento</h2></div>
+      <label for="fluxo">Fluxo</label>
+      <select id="fluxo">
+        <option value="fraco">Fraco</option>
+        <option value="médio" selected>Médio</option>
+        <option value="cheio">Alto</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- STEP 3 — Quebras (foto obrigatória) -->
+  <div class="step" data-step="3">
+    <div class="section">
+      <div class="section-head"><div class="num">2</div><h2>Quebras</h2></div>
+      <div class="check-line">
+        <input type="checkbox" id="semQuebras">
+        <label for="semQuebras" class="inline-label">Sem quebras hoje</label>
+      </div>
+      <div id="quebrasBox">
+        <label for="quebras">Item — motivo — quantidade</label>
+        <textarea id="quebras" placeholder="Copo americano alto – acidente – 1"></textarea>
+        <div class="hint">Motivo: acidente / uso indevido / desgaste</div>
+
+        <label style="margin-top:12px;">Foto do item quebrado (comprovante)</label>
+        <div class="photo-actions">
+          <label class="file-btn" for="fotoQuebrasCam">📷 Tirar foto</label>
+          <input type="file" id="fotoQuebrasCam" accept="image/*" capture="environment" hidden>
+          <label class="file-btn" for="fotoQuebrasGal">🖼️ Galeria</label>
+          <input type="file" id="fotoQuebrasGal" accept="image/*" multiple hidden>
+        </div>
+        <div class="mini-gallery" id="previewQuebras"></div>
+        <div class="error-text" id="errQuebras">Anexe ao menos uma foto da quebra para continuar (ou marque "Sem quebras hoje")</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4 — Desperdício produtos -->
+  <div class="step" data-step="4">
+    <div class="section">
+      <div class="section-head"><div class="num">3</div><h2>Desperdício — produtos</h2></div>
+      <div class="check-line">
+        <input type="checkbox" id="semDespProdutos">
+        <label for="semDespProdutos" class="inline-label">Sem desperdício de produtos hoje</label>
+      </div>
+      <div id="despProdutosBox">
+        <label for="despProdutos">Produto — motivo — quantidade</label>
+        <textarea id="despProdutos" placeholder="Caipirinha de limão – erro de pedido – 1"></textarea>
+        <div class="hint">Motivo: erro / validade / cliente</div>
+
+        <label style="margin-top:12px;">Foto do produto desperdiçado (comprovante)</label>
+        <div class="photo-actions">
+          <label class="file-btn" for="fotoDespProdutosCam">📷 Tirar foto</label>
+          <input type="file" id="fotoDespProdutosCam" accept="image/*" capture="environment" hidden>
+          <label class="file-btn" for="fotoDespProdutosGal">🖼️ Galeria</label>
+          <input type="file" id="fotoDespProdutosGal" accept="image/*" multiple hidden>
+        </div>
+        <div class="mini-gallery" id="previewDespProdutos"></div>
+        <div class="error-text" id="errDespProdutos">Anexe ao menos uma foto para continuar (ou marque "Sem desperdício de produtos hoje")</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5 — Desperdício insumos -->
+  <div class="step" data-step="5">
+    <div class="section">
+      <div class="section-head"><div class="num">4</div><h2>Desperdício — insumos</h2></div>
+      <div class="check-line">
+        <input type="checkbox" id="semDespInsumos">
+        <label for="semDespInsumos" class="inline-label">Sem desperdício de insumos hoje</label>
+      </div>
+      <div id="despInsumosBox">
+        <label for="despInsumos">Insumo — motivo — quantidade aprox.</label>
+        <textarea id="despInsumos" placeholder="Limão – passado – 6 unidades"></textarea>
+        <div class="hint">Motivo: passado / excesso / armazenamento</div>
+
+        <label style="margin-top:12px;">Foto do insumo desperdiçado (comprovante)</label>
+        <div class="photo-actions">
+          <label class="file-btn" for="fotoDespInsumosCam">📷 Tirar foto</label>
+          <input type="file" id="fotoDespInsumosCam" accept="image/*" capture="environment" hidden>
+          <label class="file-btn" for="fotoDespInsumosGal">🖼️ Galeria</label>
+          <input type="file" id="fotoDespInsumosGal" accept="image/*" multiple hidden>
+        </div>
+        <div class="mini-gallery" id="previewDespInsumos"></div>
+        <div class="error-text" id="errDespInsumos">Anexe ao menos uma foto para continuar (ou marque "Sem desperdício de insumos hoje")</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 6 — Produção OK -->
+  <div class="step" data-step="6">
+    <div class="section">
+      <div class="section-head"><div class="num">5</div><h2>Produção OK</h2></div>
+      <label for="prodOk">Item — quantidade</label>
+      <textarea id="prodOk" placeholder="Xarope de gengibre – 2L"></textarea>
+    </div>
+  </div>
+
+  <!-- STEP 7 — Produção iniciada -->
+  <div class="step" data-step="7">
+    <div class="section">
+      <div class="section-head"><div class="num">6</div><h2>Produção iniciada</h2></div>
+      <label for="prodIniciada">Item — o que falta</label>
+      <textarea id="prodIniciada" placeholder="Xarope de hortelã – falta coar e engarrafar"></textarea>
+    </div>
+  </div>
+
+  <!-- STEP 8 — Produção baixa -->
+  <div class="step" data-step="8">
+    <div class="section">
+      <div class="section-head"><div class="num">7</div><h2>Produção baixa</h2></div>
+      <label for="prodBaixa">Baixo / acabou / abaixo do padrão</label>
+      <textarea id="prodBaixa" placeholder="Baixo: gelo&#10;Acabou: limão"></textarea>
+    </div>
+  </div>
+
+  <!-- STEP 9 — Estoque crítico -->
+  <div class="step" data-step="9">
+    <div class="section">
+      <div class="section-head"><div class="num">8</div><h2>Estoque crítico</h2></div>
+      <label for="estoqueCritico">Item baixo / item acabou</label>
+      <textarea id="estoqueCritico" placeholder="Item baixo: água tônica&#10;Item acabou: gin nacional"></textarea>
+    </div>
+  </div>
+
+  <!-- STEP 10 — Limpeza/organização (foto obrigatória) -->
+  <div class="step" data-step="10">
+    <div class="section">
+      <div class="section-head"><div class="num">9</div><h2>Limpeza / organização</h2></div>
+      <label>Algo fora do padrão?</label>
+      <div class="toggle-pair">
+        <div class="toggle-btn" id="btnSim" data-val="true">Sim</div>
+        <div class="toggle-btn" id="btnNao" data-val="false">Não</div>
+      </div>
+      <label for="limpezaObs">Observação (opcional)</label>
+      <input type="text" id="limpezaObs" placeholder="Câmara fria precisa de limpeza">
+
+      <div id="fotoLimpezaBox" style="display:none;">
+        <label style="margin-top:12px;">Foto do bar limpo (comprovante de fechamento)</label>
+        <div class="photo-actions">
+          <label class="file-btn" for="fotoLimpezaCam">📷 Tirar foto</label>
+          <input type="file" id="fotoLimpezaCam" accept="image/*" capture="environment" hidden>
+          <label class="file-btn" for="fotoLimpezaGal">🖼️ Galeria</label>
+          <input type="file" id="fotoLimpezaGal" accept="image/*" multiple hidden>
+        </div>
+        <div class="mini-gallery" id="previewLimpeza"></div>
+      </div>
+      <div class="error-text" id="errLimpeza">Selecione "Sim" ou "Não", e anexe a foto caso tenha algo fora do padrão</div>
+    </div>
+  </div>
+
+  <!-- STEP 11 — Observações -->
+  <div class="step" data-step="11">
+    <div class="section">
+      <div class="section-head"><div class="num">10</div><h2>Observações operacionais</h2></div>
+      <label for="atencao">⚠️ Atenção</label>
+      <input type="text" id="atencao" placeholder="Torneira de chopp pingando" style="margin-bottom:10px;">
+      <label for="problema">⛔ Problema</label>
+      <input type="text" id="problema" placeholder="Máquina de gelo com ruído estranho" style="margin-bottom:10px;">
+      <label for="sugestao">💡 Sugestão</label>
+      <input type="text" id="sugestao" placeholder="Comprar mais baldes de gelo pro fds">
+    </div>
+  </div>
+
+  <!-- STEP 12 — Fechamento -->
+  <div class="step" data-step="12">
+    <div class="section">
+      <div class="section-head"><div class="num">➡</div><h2>Fechamento</h2></div>
+      <label for="horaFechamento">Bar fechado às</label>
+      <input type="time" id="horaFechamento">
+
+      <div class="check-line" style="margin-top:12px;">
+        <input type="checkbox" id="semFotoFechamento">
+        <label for="semFotoFechamento" class="inline-label">Nada adicional para fotografar hoje</label>
+      </div>
+      <div id="fotoFechamentoBox">
+        <label>Foto final do bar fechado (comprovante)</label>
+        <div class="photo-actions">
+          <label class="file-btn" for="fotoFechamentoCam">📷 Tirar foto</label>
+          <input type="file" id="fotoFechamentoCam" accept="image/*" capture="environment" hidden>
+          <label class="file-btn" for="fotoFechamentoGal">🖼️ Galeria</label>
+          <input type="file" id="fotoFechamentoGal" accept="image/*" multiple hidden>
+        </div>
+        <div class="mini-gallery" id="previewFechamento"></div>
+        <div class="error-text" id="errFechamento">Anexe ao menos uma foto do fechamento para continuar (ou marque a opção acima)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 13 — Revisão + Salvar -->
+  <div class="step" data-step="13">
+    <div class="section">
+      <div class="section-head"><div class="num">✓</div><h2>Revisão e envio</h2></div>
+      <div class="review" id="reviewBox"></div>
+      <div class="status-message" id="statusMessage"></div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-clear" id="btnPrev">Voltar</button>
+    <button class="btn btn-copy" id="btnNext">Avançar</button>
+    <button class="btn btn-copy" id="btnSave" style="display:none;">Salvar registro</button>
+  </div>
+
+  <div class="footer-note" id="footerNote">fechamento registrado, maré em paz.</div>
+  </div>
+  <!-- /tab-fechamento -->
+
+  <div id="tab-relatorio" class="tab-panel">
+    <div class="masthead">
+      <div class="eyebrow">Beijupirá · retrospecto</div>
+      <h1>Relatório <em>de fechamento</em></h1>
+      <div class="sub">Filtre e puxe direto do banco de dados</div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><div class="num">·</div><h2>Filtros</h2></div>
+
+      <label for="filtroPeriodo">Período</label>
+      <select id="filtroPeriodo">
+        <option value="hoje">Hoje</option>
+        <option value="semana" selected>Últimos 7 dias</option>
+        <option value="mes">Este mês</option>
+        <option value="personalizado">Personalizado</option>
+      </select>
+
+      <div id="filtroPersonalizado" style="display:none;">
+        <div class="field-row" style="margin-top:10px;">
+          <div>
+            <label for="filtroDe">De</label>
+            <input type="date" id="filtroDe">
+          </div>
+          <div>
+            <label for="filtroAte">Até</label>
+            <input type="date" id="filtroAte">
+          </div>
+        </div>
+      </div>
+
+      <label for="filtroResponsavel" style="margin-top:12px;">Responsável (opcional)</label>
+      <input type="text" id="filtroResponsavel" placeholder="Filtrar por nome">
+
+      <button class="btn btn-copy" id="btnBuscarRelatorio" style="margin-top:14px; width:100%;">Buscar relatório</button>
+      <div class="status-message" id="statusRelatorio"></div>
+    </div>
+
+    <div class="section" id="resumoBox" style="display:none;">
+      <div class="section-head"><div class="num">Σ</div><h2>Resumo do período</h2></div>
+      <div class="stats-grid" id="statsGrid"></div>
+
+      <div id="semaforoBox"></div>
+
+      <div id="estoqueCriticoResumo"></div>
+      <div id="horariosResumo"></div>
+
+      <div class="export-actions">
+        <button class="btn btn-clear" id="btnExportPdf" type="button">📄 Exportar PDF</button>
+        <button class="btn btn-copy" id="btnExportExcel" type="button">📊 Exportar Excel</button>
+      </div>
+    </div>
+
+    <div class="section" id="listaBox" style="display:none;">
+      <div class="section-head"><div class="num">☰</div><h2>Registros encontrados</h2></div>
+      <div id="listaRegistros"></div>
+    </div>
+  </div>
+  <!-- /tab-relatorio -->
+</div>
+<!-- /wrap -->
+
+<!-- Supabase (via CDN, sem build tool) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<!-- Exportação PDF/Excel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="supabase-config.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
