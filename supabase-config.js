@@ -11,8 +11,8 @@
 // a segurança fica por conta das políticas de RLS criadas no schema.sql.
 // ============================================================
 
-const SUPABASE_URL = "https://hywgsscgeognazgrjmyy.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_oHWE8Qr_lqkQaZ5tfiAVzw_7vmho1U0";
+const SUPABASE_URL = "https://mlohjvqimorcqcrsdszf.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_IiYxl9TH5yor9JGjZ95mnQ_RcEv9";
 
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
